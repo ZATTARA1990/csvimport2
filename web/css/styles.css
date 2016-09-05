@@ -1,0 +1,106 @@
+html {
+  font-size: 100%;
+  font-family: "Source Sans Pro", sans-serif;
+  color: #555;
+}
+
+body > h1 {
+  margin-left: 2rem;
+}
+
+th:hover {
+  cursor: pointer;
+}
+
+td {
+  text-align: center;
+}
+
+tr td:first-of-type {
+  text-align: left;
+}
+
+tr:first-child {
+  border-top: 1px solid #ccc;
+}
+
+td,
+th {
+  font-family: sans-serif;
+  padding: 1rem;
+  border: 1px solid #ccc;
+}
+
+tbody tr:nth-child(odd) {
+  background: #eee;
+}
+
+input:focus,
+input:active {
+  outline: none;
+}
+
+.content {
+  margin: 0 2rem;
+}
+
+.table {
+  width: 100%;
+  max-width: 100%;
+  vertical-align: top;
+  overflow-x: auto;
+  white-space: nowrap;
+  border-collapse: collapse;
+  border-spacing: 0;
+  margin-top: 1rem;
+}
+
+.table th {
+  text-align: center;
+  text-transform: uppercase;
+}
+
+@media only screen
+  and (min-device-width: 320px)
+  and (max-device-width: 640px)
+  and (orientation: landscape) {
+  .table--flip {
+    display: flex;
+    overflow: hidden;
+  }
+
+  .table--flip thead {
+    display: flex;
+    flex-shrink: 0;
+    min-width: min-content;
+  }
+
+  .table--flip tbody {
+    display: flex;
+    position: relative;
+    overflow-x: auto;
+    overflow-y: hidden;
+  }
+
+  .table--flip tr {
+    display: flex;
+    flex-direction: column;
+    min-width: min-content;
+    flex-shrink: 0;
+  }
+
+  .table--flip td,
+  .table--flip th {
+    display: block;
+  }
+
+  .table--flip td {
+    background-image: none !important;
+    border-left: 0;
+  }
+
+  .table--flip th:not(:last-child),
+  .table--flip td:not(:last-child) {
+    border-bottom: 0;
+  }
+}

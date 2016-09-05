@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="candidatedevtest">
+  <head>
+    <title>Candidate Development Test</title>
+
+    <meta charset="utf-8" lang="en" />
+    <meta name="theme-color" content="#ffffff" />
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+    <link rel="stylesheet" type="text/css" href="./node_modules/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="./node_modules/ng-table/dist/ng-table.css" />
+    <link rel="stylesheet" type="text/css" href="./css/styles.css">
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700" rel="stylesheet">
+
+    <base href="/" />
+  </head>
+  <body ng-controller="ctrl">
+    <h1>Candidate Development Test</h1>
+    <section class="content">
+      <h2>Data table</h2>
+      <button class="btn btn-primary">Add</button>
+      <button class="btn btn-warning">Edit</button>
+      <button class="btn btn-danger">Delete</button>
+      <table class="table table--flip" ng-table="tableParams" show-filter="true">
+        <tbody>
+          <tr ng-repeat="item in $data">
+            <td data-title="'Name'" filter="{ name: 'text' }" sortable="'name'">
+              {{item.name}}
+            </td>
+            <td data-title="'Quantity'" filter="{ qty: 'number' }" sortable="'qty'">
+              {{item.qty}}
+            </td>
+            <td data-title="'Price'" filter="{ price: 'number' }" sortable="'price'">
+              {{item.price}}$
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- Scripts -->
+    <script src="./node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="./node_modules/angular/angular.min.js"></script>
+    <script src="./node_modules/ng-table/dist/ng-table.min.js"></script>
+    <script src="./js/app.js"></script>
+  </body>
+</html>

@@ -1,0 +1,12 @@
+{
+  "name": "Candidate Development Test",
+  "description": "Get, edit and delete your stock items",
+  "version": "0.0.1",
+  "license": "MIT",
+  "dependencies": {
+    "angular": "^1.5.8",
+    "bootstrap": "^3.3.7",
+    "jquery": "^3.1.0",
+    "ng-table": "^1.0.0"
+  }
+}
