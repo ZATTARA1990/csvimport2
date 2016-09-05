@@ -1,0 +1,5 @@
+# Dependency directories
+web/node_modules
+
+# Optional npm cache directory
+web/.npm
