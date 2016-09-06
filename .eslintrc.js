@@ -3,9 +3,7 @@ module.exports = {
   "installedESLint": true,
   "env": {
     "browser": true,
-    "jquery": true,
-    "node": true,
-    "mongo": true
+    "jquery": true
   },
   "plugins": [
     "standard",
@@ -14,8 +12,7 @@ module.exports = {
   ],
   "globals": {
     "angular": true,
-    "context": true,
-    "dataLoaded": true
+    "_": true
   },
   "rules": {
     "semi": 0,
