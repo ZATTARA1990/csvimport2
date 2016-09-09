@@ -1,0 +1,30 @@
+product_index:
+    path:     /
+    defaults: { _controller: "CSVParceBundle:Product:index", _format: json  }
+    methods:  GET
+
+product_show:
+    path:     /show/{id}
+    defaults: { _controller: "CSVParceBundle:Product:show", _format: json }
+    methods: GET
+    requirements:
+              id: "\d+"
+
+product_new:
+    path:     /new
+    defaults: { _controller: "CSVParceBundle:Product:new",_format: json }
+    methods:  [POST]
+
+product_edit:
+    path:     /edit/{id}
+    defaults: { _controller: "CSVParceBundle:Product:edit",_format: json }
+    methods:  [PUT]
+    requirements:
+                  id: "\d+"
+
+product_delete:
+    path:     /delete/{id}
+    defaults: { _controller: "CSVParceBundle:Product:delete",_format: json }
+    methods:  DELETE
+    requirements:
+                  id: "\d+"
