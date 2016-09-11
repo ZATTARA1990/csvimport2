@@ -20,7 +20,6 @@ class ProductType extends AbstractType
             ->add('stock')
             ->add('description')
             ->add('discontinued')
-            ->add('discontinuedDate')
         ;
     }
     

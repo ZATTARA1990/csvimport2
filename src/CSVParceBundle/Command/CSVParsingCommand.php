@@ -37,7 +37,7 @@ class CSVParsingCommand extends ContainerAwareCommand
         $em = $this->getContainer()->get('doctrine')->getManager();
 
         //set param for filter
-        $myfilter=$this->getContainer()->get('validator');
+        $myfilter=$this->getContainer()->get('CSVvalidator');
 
         //set param for converter
         $myconvertor=$this->getContainer()->get('reformat');
@@ -59,4 +59,7 @@ class CSVParsingCommand extends ContainerAwareCommand
 
 
     }
+
+
+
 }

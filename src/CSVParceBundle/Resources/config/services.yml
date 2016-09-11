@@ -1,6 +1,6 @@
 services:
-    validator:
-        class: CSVParceBundle\MyClass\Validator
+    CSVvalidator:
+        class: CSVParceBundle\MyClass\CSVValidator
 
     reformat:
        class: CSVParceBundle\MyClass\Reformat

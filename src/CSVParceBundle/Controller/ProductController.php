@@ -90,30 +90,34 @@ class ProductController extends Controller
 
     private function processForm(Product $product)
     {
-//        $statusCode = $product->isNew() ? 201 : 204;
-        $request = new Request();
+        $statusCode = $product->getId() ? 204 : 201;
+
         $form = $this->createForm(new ProductType(), $product);
+
+
         $form->bind($this->getRequest());
 
-//      if ($form->isValid()) {
+        $validator = $this->get('validator');
+        $errors = $validator->validate($product);
+
+        if (!(count($errors)>0)) {
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($product);
             $em->flush();
 
             $response = new Response();
-            $response->setStatusCode('201');
+            $response->setStatusCode($statusCode);
             $response->headers->set('Location',
                 $this->generateUrl(
                     'product_show', array('id' => $product->getId()), true
                 )
             );
-
             return $response;
-//        }
-//        return 'This her';
-//
-//        return RView::create($form, 400);
+        }
+
+
+         return RView::create($form, 400);
     }
 
 

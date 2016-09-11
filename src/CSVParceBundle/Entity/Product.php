@@ -3,6 +3,8 @@
 namespace CSVParceBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
 use Symfony\Component\Validator\Mapping\ClassMetadata;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
@@ -15,22 +17,22 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 class Product
 {
 
-    public static function loadValidatorMetadata(ClassMetadata $metadata)
+    /*public static function loadValidatorMetadata(ClassMetadata $metadata)
     {
         $metadata->addPropertyConstraint('productName', new NotBlank());
         $metadata->addPropertyConstraint('price', new NotBlank());
         $metadata->addPropertyConstraint('stock',  new NotBlank());
         $metadata->addPropertyConstraint('description', new NotBlank());
         $metadata->addPropertyConstraint('discontinued', new NotBlank());
-//       $metadata->addPropertyConstraint('discontinuedDate', new NotBlank());
 
-    }
+    }*/
     /**
      * @var int
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+
      */
     private $id;
 
@@ -38,6 +40,8 @@ class Product
      * @var string
      *
      * @ORM\Column(name="product_name", type="string", length=255)
+     *
+     * @Assert\NotBlank()
      */
     private $productName;
 
@@ -45,6 +49,9 @@ class Product
      * @var float
      *
      * @ORM\Column(name="price", type="float")
+     *
+     *  @Assert\NotBlank()
+     *
      */
     private $price;
 
@@ -52,6 +59,9 @@ class Product
      * @var int
      *
      * @ORM\Column(name="stock", type="integer")
+     *
+     *  @Assert\NotBlank()
+     *
      */
     private $stock;
 
@@ -59,6 +69,9 @@ class Product
      * @var string
      *
      * @ORM\Column(name="description", type="text")
+     *
+     *  @Assert\NotBlank()
+     *
      */
     private $description;
 
@@ -66,6 +79,9 @@ class Product
      * @var int
      *
      * @ORM\Column(name="discontinued", type="smallint")
+     *
+     *  @Assert\NotBlank()
+     *
      */
     private $discontinued;
 

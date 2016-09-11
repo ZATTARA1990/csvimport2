@@ -9,7 +9,7 @@
 namespace CSVParceBundle\MyClass;
 
 
-class Validator
+class CSVValidator
 {
     /**
      * Set the filter with the rules import
