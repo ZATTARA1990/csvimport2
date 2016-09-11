@@ -208,7 +208,7 @@ class Product
      * @param \DateTime $discontinuedDate
      * @return Product
      */
-    public function setDiscontinuedDate($discontinuedDate)
+    public function setDiscontinuedDate($discontinuedDate=null)
     {
         $this->discontinuedDate = $discontinuedDate;
 

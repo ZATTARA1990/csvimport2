@@ -7,10 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Input\InputArgument;
-use Ddeboer\DataImport\Reader;
-use Ddeboer\DataImport\Writer;
-use Ddeboer\DataImport\Step;
-use Ddeboer\DataImport\Workflow\StepAggregator;
+use CSVParceBundle\MyClass\WrapperWorkflow;
 
 
 class CSVParsingCommand extends ContainerAwareCommand
@@ -32,69 +29,33 @@ class CSVParsingCommand extends ContainerAwareCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
 
-
+        // get the filename and option test
         $filename = $input->getArgument('fileName');
         $test = $input->getArgument('Test');
 
-
+        // get entity maneger
         $em = $this->getContainer()->get('doctrine')->getManager();
 
-        //read CSV file
-        $file = new \SplFileObject($filename);
-        $reader = new Reader\CsvReader($file);
-        $reader->setHeaderRowNumber(0);
-        $count = $reader->count();
+        //set param for filter
+        $myfilter=$this->getContainer()->get('validator');
 
+        //set param for converter
+        $myconvertor=$this->getContainer()->get('reformat');
 
+        $workflow=new  WrapperWorkflow($test);
 
-        $workflow = new StepAggregator($reader);
-
-        //selection Writer
-        if ($test) {
-            $writer = new Writer\CallbackWriter(function () {
-            });
-        } else {
-            $writer = new Writer\DoctrineWriter($em, 'CSVParceBundle:Product');
-            $writer->disableTruncate();
-        }
-
-
-        // Set filter
-        $filter = new Step\FilterStep();
-        $myfilter = function ($data) {
-            if ($data['price'] < 1000) {
-                if ($data['price'] > 5 || $data['stock'] > 10) {
-                    return true;
-                }
-            }
-            return false;
-        };
-
-
-        //Set convertor
-        $convertor=new Step\ConverterStep();
-        $myconvertor=function($product){
-            $time=' 00:00:00';
-            $product['discontinuedDate']=new \DateTime($product['discontinuedDate'].$time);
-            if($product['discontinued']){
-                $product['discontinuedDate']=new \DateTime('now');
-            }
-            return $product;
-        };
-        //The workflow
-
-        $result = $workflow
-            ->addWriter($writer)
-            ->addStep($filter->add($myfilter))
-            ->addStep($convertor->add($myconvertor))
+        //workflow import csv file
+        $result=$workflow->read($filename)
+            ->write($em, 'CSVParceBundle:Product')
+            ->setFilter($myfilter)
+            ->setFormat($myconvertor)
             ->process();
-
 
         //output results
         $output->writeln('Result import: ' . $filename);
-        $output->writeln('All items: ' . $count);
+        $output->writeln('All items: ' . $workflow->count);
         $output->writeln('Were seccesfull: ' . $result->getSuccessCount());
-        $output->writeln('Were skipped: ' . ($count - $result->getSuccessCount()));
+        $output->writeln('Were skipped: ' . ($workflow->count - $result->getSuccessCount()));
 
 
     }
