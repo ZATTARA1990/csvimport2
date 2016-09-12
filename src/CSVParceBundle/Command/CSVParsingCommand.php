@@ -7,6 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Input\InputOption;
 use CSVParceBundle\MyClass\WrapperWorkflow;
 
 
@@ -23,7 +24,8 @@ class CSVParsingCommand extends ContainerAwareCommand
             // the "--help" option
             ->setHelp("This command allows you to parsing of the selected file...")
             ->addArgument('fileName', InputArgument::REQUIRED, 'path to file.')
-            ->addArgument('Test', InputArgument::OPTIONAL, 'enable test mode.');
+            ->addArgument('test', InputArgument::OPTIONAL, 'enable test mode');
+
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -31,9 +33,9 @@ class CSVParsingCommand extends ContainerAwareCommand
 
         // get the filename and option test
         $filename = $input->getArgument('fileName');
-        $test = $input->getArgument('Test');
+        $test = $input->getArgument('test');
 
-        // get entity maneger
+        // get entity manager
         $em = $this->getContainer()->get('doctrine')->getManager();
 
         //set param for filter
@@ -54,7 +56,7 @@ class CSVParsingCommand extends ContainerAwareCommand
         //output results
         $output->writeln('Result import: ' . $filename);
         $output->writeln('All items: ' . $workflow->count);
-        $output->writeln('Were seccesfull: ' . $result->getSuccessCount());
+        $output->writeln('Were successful: ' . $result->getSuccessCount());
         $output->writeln('Were skipped: ' . ($workflow->count - $result->getSuccessCount()));
 
 
