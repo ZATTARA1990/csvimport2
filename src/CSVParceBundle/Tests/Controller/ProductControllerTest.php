@@ -28,7 +28,7 @@ class ProductControllerTest extends WebTestCase
     {
         $client = static::createClient();
 
-        $crawler = $client->request('GET', '/product/show/2');
+        $crawler = $client->request('GET', '/product/show/5');
 
         $this->assertTrue(
             $client->getResponse()->headers->contains(
@@ -40,8 +40,17 @@ class ProductControllerTest extends WebTestCase
         $this->assertTrue($client->getResponse()->isSuccessful(), '200');
 
 //        $this->assertContains(
-//            '{"product":{"id":2,"productName":"testedit","price":10,"stock":12,"description":"description1",
-//            "discontinued":1,"discontinuedDate":null}}',
+//                            '{
+//                  "product1": {
+//                    "id": 5,
+//                    "productName": "ZATTARA",
+//                    "price": 10.1,
+//                    "stock": 5,
+//                    "description": "test1",
+//                    "discontinued": 1,
+//                    "discontinuedDate": null
+//                  }
+//                }',
 //            $client->getResponse()->getContent()
 //        );
 
@@ -60,7 +69,7 @@ class ProductControllerTest extends WebTestCase
                 'CONTENT_TYPE'          => 'application/json',
             ),
             '{"product":{"productName":"testedit","price":10,"stock":12,"description":"description1",
-//            "discontinued":1}}'
+            "discontinued":1}}'
         );
         $this->assertTrue(
             $client->getResponse()->headers->contains(
@@ -69,11 +78,29 @@ class ProductControllerTest extends WebTestCase
             ),
             'the "Content-Type" header is "application/json"' // optional message shown on failure
         );
-       // $this->assertTrue($client->getResponse()->isRedirect(), '201');
+        $this->assertEquals(201, $client->getResponse()->getStatusCode());
 
 
     }
 
+    public function testEdit()
+    {
+        $client = static::createClient();
+
+        $crawler = $client->request(
+            'PUT',
+            '/product/edit/3',
+            array(),
+            array(),
+            array(
+                'CONTENT_TYPE'          => 'application/json',
+            ),
+            '{"product":{"productName":"ZATTARA1","price":10.1,"stock":5,"description":"test1","discontinued":1}}'
+        );
+
+        $this->assertEquals(204, $client->getResponse()->getStatusCode());
+
+    }
 
 
 }
