@@ -116,14 +116,16 @@ class ProductController extends Controller
     public function multiEditAction()
     {
 
-        $content = $this->getRequest()->getContent();;
+        $serialayz = $this->get('jms_serializer');
+        $content = $this->getRequest()->getContent();
 
-        $content = json_decode($content);
+        $products = $serialayz->deserialize($content, 'array', 'json');
 
-        foreach ($content as $x) {
-            $form = $this->createForm(new ProductType(), $x);
-            $form->bind($x);
-            $this->editAction($x);
+        foreach ($products['products'] as $product) {
+
+            $product = $serialayz->fromArray($product, 'CSVParceBundle\Entity\Product');
+
+            $this->editAction($product);
         }
 
     }
@@ -132,10 +134,13 @@ class ProductController extends Controller
     {
         $statusCode = $product->getId() ? 204 : 201;
 
+//        dump($product);
+//        die();
         $form = $this->createForm(new ProductType(), $product);
 
 
         $form->bind($this->getRequest());
+
 
         $validator = $this->get('validator');
         $errors = $validator->validate($product);
