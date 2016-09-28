@@ -77,7 +77,6 @@ class ProductController extends Controller
 
     /**
      * @Rest\View(statusCode=204)
-     *
      */
 
     public function deleteAction(Product $product)
@@ -90,20 +89,44 @@ class ProductController extends Controller
 
     /**
      * @Rest\View(statusCode=204)
-     *
      */
-    public function deleteAllAction()
+
+    public function allDeleteAction()
     {
-        $request = new Request();
-        $products = json_decode($request->getContent());
 
+        $content = $this->getRequest()->getContent();
 
-        $response = new Response();
-        $response->setContent($products->{"id"});
+        $products = json_decode($content);
+        $em = $this->getDoctrine()->getManager();
 
+        foreach ($products as $product_id) {
+            $product = $em->getRepository('CSVParceBundle:Product')->findOneById($product_id);
+
+            $em->remove($product);
+        }
+
+        $em->flush();
 
     }
 
+    /**
+     * Displays a form to edit an existing Product entities.
+     *
+     */
+    public function multiEditAction()
+    {
+
+        $content = $this->getRequest()->getContent();;
+
+        $content = json_decode($content);
+
+        foreach ($content as $x) {
+            $form = $this->createForm(new ProductType(), $x);
+            $form->bind($x);
+            $this->editAction($x);
+        }
+
+    }
 
     private function processForm(Product $product)
     {
@@ -113,7 +136,6 @@ class ProductController extends Controller
 
 
         $form->bind($this->getRequest());
-
 
         $validator = $this->get('validator');
         $errors = $validator->validate($product);

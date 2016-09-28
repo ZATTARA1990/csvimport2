@@ -3,5 +3,5 @@ csv_parce_product:
     prefix:   /product
 
 csv_parce_homepage:
-    path:     /
+    path:     /home
     defaults: { _controller: CSVParceBundle:Default:index }
