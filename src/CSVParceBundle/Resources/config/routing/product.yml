@@ -1,6 +1,6 @@
 product_index:
     path:     /
-    defaults: { _controller: "CSVParceBundle:Product:index", _format: json  }
+    defaults: { _controller: "CSVParceBundle:Product:index", _format: json}
     methods:  GET
 
 product_show:
@@ -28,3 +28,10 @@ product_delete:
     methods:  DELETE
     requirements:
                   id: "\d+"
+
+products_del:
+    path:     /delete
+    defaults: { _controller: "CSVParceBundle:Product:deleteAll",_format: json }
+    methods:  DELETE
+
+

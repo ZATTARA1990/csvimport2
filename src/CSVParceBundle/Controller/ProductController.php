@@ -77,6 +77,7 @@ class ProductController extends Controller
 
     /**
      * @Rest\View(statusCode=204)
+     *
      */
 
     public function deleteAction(Product $product)
@@ -84,6 +85,22 @@ class ProductController extends Controller
         $em = $this->getDoctrine()->getManager();
         $em->remove($product);
         $em->flush();
+
+    }
+
+    /**
+     * @Rest\View(statusCode=204)
+     *
+     */
+    public function deleteAllAction()
+    {
+        $request = new Request();
+        $products = json_decode($request->getContent());
+
+
+        $response = new Response();
+        $response->setContent($products->{"id"});
+
 
     }
 
@@ -97,10 +114,16 @@ class ProductController extends Controller
 
         $form->bind($this->getRequest());
 
+
         $validator = $this->get('validator');
         $errors = $validator->validate($product);
 
-        if (!(count($errors)>0)) {
+        if ($product->getDiscontinued()) {
+            $product->setDiscontinuedDate(new \DateTime('now'));
+        }
+
+
+        if (!(count($errors) > 0)) {
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($product);
@@ -117,7 +140,7 @@ class ProductController extends Controller
         }
 
 
-         return RView::create($form, 400);
+        return RView::create($form, 400);
     }
 
 

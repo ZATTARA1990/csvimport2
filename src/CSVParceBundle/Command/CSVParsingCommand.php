@@ -42,7 +42,7 @@ class CSVParsingCommand extends ContainerAwareCommand
         $myfilter=$this->getContainer()->get('CSVvalidator');
 
         //set param for converter
-        $myconvertor=$this->getContainer()->get('reformat');
+        $myconvertor = $this->getContainer()->get('reformat');
 
         $workflow=new  WrapperWorkflow($test);
 
