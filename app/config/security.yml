@@ -4,8 +4,12 @@ security:
 
     # http://symfony.com/doc/current/book/security.html#where-do-users-come-from-user-providers
     providers:
-        in_memory:
-            memory: ~
+            in_memory:
+                memory:
+                    users:
+                        dev:
+                            password: 569e5f8b0ff55
+                            roles: ROLE_DOC
 
     firewalls:
         # disables authentication for assets and the profiler, adapt it according to your needs

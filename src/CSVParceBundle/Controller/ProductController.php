@@ -12,6 +12,7 @@ use CSVParceBundle\Form\ProductType;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use FOS\RestBundle\View\View as RView;
+use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 
 /**
  * Product controller.
@@ -22,6 +23,16 @@ class ProductController extends Controller
 
     /**
      * @Rest\View
+     *
+     * @ApiDoc(
+     *   resource = true,
+     *   description = "Return all products.",
+     *   statusCodes = {
+     *     200 = "Returned when successful",
+     *   },
+     *   output = "CSVParceBundle\Entity\Product"
+     * )
+     *
      */
     public function indexAction()
     {
@@ -41,6 +52,15 @@ class ProductController extends Controller
      * Finds and displays a Product entity.
      *
      * @Rest\View
+     *
+     * @ApiDoc(
+     *   resource = true,
+     *   description = "Return  product by id.",
+     *   statusCodes = {
+     *     200 = "Returned when successful",
+     *   },
+     *   output = "CSVParceBundle\Entity\Product"
+     * )
      */
     public function showAction($id)
     {
@@ -57,6 +77,16 @@ class ProductController extends Controller
 
     /**
      * Creates a new Product entity.
+     *
+     * @ApiDoc(
+     *   resource = true,
+     *   description = "Create a new praduct",
+     *   statusCodes = {
+     *     201 = "Returned when successful",
+     *   },
+     *   input ="CSVParceBundle\Form\ProductType" ,
+     *   output = "View"
+     * )
      *
      */
     public function newAction()
@@ -163,7 +193,7 @@ class ProductController extends Controller
         $form = $this->createForm(new ProductType(), $product);
 
         $product = $serialayz->deserialize($this->getRequest()->getContent(), 'array', 'json');
-       
+
         $product = $serialayz->fromArray($product['product'], 'CSVParceBundle\Entity\Product');
 
         $form->bind($product);
