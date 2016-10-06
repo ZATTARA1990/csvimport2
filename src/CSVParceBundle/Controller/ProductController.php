@@ -121,34 +121,61 @@ class ProductController extends Controller
 
         $products = $serialayz->deserialize($content, 'array', 'json');
 
+        $em = $this->getDoctrine()->getManager();
+
         foreach ($products['products'] as $product) {
 
             $product = $serialayz->fromArray($product, 'CSVParceBundle\Entity\Product');
+            dump($product);
+            die();
+            /**@var Product $prod */
+            $prod = $em->getRepository('CSVParceBundle:Product')->find($product->getId());
 
-            $this->editAction($product);
+            if ($product->getDiscontinued()) {
+                $product->setDiscontinuedDate(new \DateTime('now'));
+            }
+            $prod->setProductName($product->getProductName());
+            $prod->setDescription($product->getDescription());
+            $prod->setDiscontinued($product->getDiscontinued());
+            $prod->setPrice($product->getPrice());
+            $prod->setStock($product->getStock());
+            $prod->setDiscontinuedDate($product->getDiscontinuedDate());
+
+            $em->persist($prod);
+
         }
+        $em->flush();
 
+        $response = new Response();
+
+        return $response->setContent('ok');
     }
 
     private function processForm(Product $product)
     {
+        $serialayz = $this->get('jms_serializer');
+
+
+
         $statusCode = $product->getId() ? 204 : 201;
 
-//        dump($product);
-//        die();
+
         $form = $this->createForm(new ProductType(), $product);
 
+        $product = $serialayz->deserialize($this->getRequest()->getContent(), 'array', 'json');
+       
+        $product = $serialayz->fromArray($product['product'], 'CSVParceBundle\Entity\Product');
 
-        $form->bind($this->getRequest());
+        $form->bind($product);
 
 
         $validator = $this->get('validator');
         $errors = $validator->validate($product);
 
+
         if ($product->getDiscontinued()) {
             $product->setDiscontinuedDate(new \DateTime('now'));
         }
-
 
         if (!(count($errors) > 0)) {
 

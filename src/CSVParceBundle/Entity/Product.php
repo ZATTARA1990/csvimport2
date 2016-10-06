@@ -17,15 +17,6 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 class Product
 {
 
-    /*public static function loadValidatorMetadata(ClassMetadata $metadata)
-    {
-        $metadata->addPropertyConstraint('productName', new NotBlank());
-        $metadata->addPropertyConstraint('price', new NotBlank());
-        $metadata->addPropertyConstraint('stock',  new NotBlank());
-        $metadata->addPropertyConstraint('description', new NotBlank());
-        $metadata->addPropertyConstraint('discontinued', new NotBlank());
-
-    }*/
     /**
      * @var int
      *
