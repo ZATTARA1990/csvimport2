@@ -80,7 +80,7 @@ class ProductController extends Controller
      *
      * @ApiDoc(
      *   resource = true,
-     *   description = "Create a new praduct",
+     *   description = "Create a new product",
      *   statusCodes = {
      *     201 = "Returned when successful",
      *   },
@@ -99,6 +99,15 @@ class ProductController extends Controller
     /**
      * Displays a form to edit an existing Product entity.
      *
+     * @ApiDoc(
+     *
+     *   description = "Delete product by id",
+     *   statusCodes = {
+     *     204 = "Returned when successful",
+     *   },
+     *   input ="CSVParceBundle\Entity\Product"
+     * )
+     *
      */
     public function editAction(Product $product)
     {
@@ -107,6 +116,15 @@ class ProductController extends Controller
 
     /**
      * @Rest\View(statusCode=204)
+     *
+     * @ApiDoc(
+     *
+     *   description = "Delete product by id",
+     *   statusCodes = {
+     *     204 = "Returned when successful",
+     *   },
+     *   input ="CSVParceBundle\Entity\Product"
+     * )
      */
 
     public function deleteAction(Product $product)
