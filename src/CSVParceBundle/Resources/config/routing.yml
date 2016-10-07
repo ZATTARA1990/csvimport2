@@ -2,6 +2,3 @@ csv_parce_product:
     resource: "@CSVParceBundle/Resources/config/routing/product.yml"
     prefix:   /product
 
-csv_parce_homepage:
-    path:     /home
-    defaults: { _controller: CSVParceBundle:Default:index }

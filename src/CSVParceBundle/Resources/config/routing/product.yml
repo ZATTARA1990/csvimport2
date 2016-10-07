@@ -32,7 +32,7 @@ product_delete:
 products_delete:
     path:     /delete
     defaults: { _controller: "CSVParceBundle:Product:allDelete",_format: json }
-    methods:  POST
+    methods:  DELETE
 
 products_edit:
     path:     /edit
