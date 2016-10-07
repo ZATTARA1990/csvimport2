@@ -67,6 +67,10 @@ swiftmailer:
     spool:     { type: memory }
 
 fos_rest:
+      exception:
+              enabled: true
+              exception_controller: 'CSVParceBundle\Controller\ExceptionController::showAction'
+
       body_listener: true
       view:
         formats:

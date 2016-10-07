@@ -6,14 +6,12 @@ use Symfony\Component\DomCrawler\Form;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-
 use CSVParceBundle\Entity\Product;
 use CSVParceBundle\Form\ProductType;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use FOS\RestBundle\View\View as RView;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
-
 
 class ProductController extends Controller
 {
@@ -30,6 +28,7 @@ class ProductController extends Controller
      * )
      * @return array
      */
+
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
@@ -101,7 +100,9 @@ class ProductController extends Controller
      */
     public function editAction(Product $product)
     {
+
         return $this->processForm($product);
+
     }
 
     /**
@@ -220,7 +221,6 @@ class ProductController extends Controller
 
     private function processForm(Product $product)
     {
-
         $statusCode = $product->getId() ? 204 : 201;
 
         $form = $this->createForm(new ProductType(), $product);
@@ -252,6 +252,5 @@ class ProductController extends Controller
 
         return RView::create($form, 400);
     }
-
 }
 
